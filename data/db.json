@@ -1,0 +1,28 @@
+{
+  "blogs": [
+    {
+      "title": "My First Blog",
+      "body": "Why do we use it>\nIt is not established yet This answer was pointed out by @johnhendirx and written by @rangfu, see link and give him some love if this was your problem. If you're having issues because of this it usually means you're not using useEffect for its intended purpose. ",
+      "author": "Mani",
+      "id": 1
+    },
+    {
+      "title": "My Opening party",
+      "body": "Why do we use it>\nIt is not established yet But it is not specified anywhere that StrictMode cause useEffect to run twice too. Strict Mode is used to detect if we are doing side effect in any function which should be pure so only those functions that needed to be pure are run twice but as useEffect can contain side effect",
+      "author": "Lui",
+      "id": 2
+    },
+    {
+      "title": "My Opening party",
+      "body": "Why do we use it>\nIt is not established yet But it is not specified anywhere that StrictMode cause useEffect to run twice too. Strict Mode is used to detect if we are doing side effect in any function which should be pure so only those functions that needed to be pure are run twice but as useEffect can contain side effect",
+      "author": "Lui",
+      "id": 2
+    },
+    {
+      "title": "Mani",
+      "body": "I was here",
+      "author": "mani",
+      "id": 3
+    }
+  ]
+}
