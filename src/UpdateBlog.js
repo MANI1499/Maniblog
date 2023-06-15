@@ -1,68 +1,77 @@
+import { useState } from "react";
 import { useParams, useNavigate } from 'react-router-dom';
 import useFetch from './useFetch';
 
-const BlogDetails = () => {
+const Create = () => {
+    const { id } = useParams();
     const [title, setTitle] = useState('');
     const [body, setBody] = useState('');
     const [author, setAuthor] = useState('Lui');
-    const { id } = useParams();
-    const navigate = useNavigate()
-    const { data: getBlogs, error, isLoading } = useFetch(' http://localhost:8000/blogs/' + id)
+    const navigate = useNavigate();
+    const [isload, isLoading] = useState(false);
+    const { data: getBlogs, error } = useFetch('https://db-rose.vercel.app/blogs/' + id)
 
 
-    const updateBlog = () => {
 
-        fetch(' http://localhost:8000/blogs/'+ id, {
-            method: 'PUT'
+ 
 
-        }).then (() => {
-            navigate('/')
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        const blog = { title, body, author };
+        
+        isLoading(true);
+
+        fetch('https://db-rose.vercel.app/blogs/'+id, {
+            method: 'PUT',
+            headers: { "Content-Type": "application/json"},
+            body: JSON.stringify(blog)
         })
+        .then(() => {
+            isLoading(false);
+            setTitle('');
+            setBody('');
+            setAuthor('');
+        })
+
+        navigate('/');
     }
 
-   
     return (
         <div>
-        { isLoading && <p>Loading data...</p> }
-        { error && <div>{ error }</div>}
-        { getBlogs && (
-            <article>
-                <h2>{ getBlogs.title }</h2>
-                <p>Written by { getBlogs.author }</p>
-                <div>{ getBlogs.body }</div>
-                
-                
-        <button onClick={ updateBlog }> Update</button>
-            </article>
-        )}
-
-<form onSubmit={handleSubmit}>
+            
+        <div className="create">
+            <h2> Update Blog</h2>
+            { error && <div>{ error }</div>}
+            { getBlogs && (
+            <form key={ getBlogs.id } onSubmit={handleSubmit}>
                 <label> Blog Title:</label>
                 <input
                     type="text"
                     required
-                    value={ getBlogs.title }
+                    defaultValue={ getBlogs.title }
                     onChange= {(e) => setTitle(e.target.value)}
                 />
                 <label> Blog Content:</label>
                 <textarea
                     required
-                    value={ getBlogs.body }
+                    defaultValue={ getBlogs.body }
                     onChange={(e) => setBody(e.target.value)}
                 ></textarea>
                 <label> Blog Author:</label>
                 <select
-                value= {getBlogs.author}
+                defaultValue= { getBlogs.author}
                 onChange= {(e) => setAuthor(e.target.value)}
                 >
                     <option value="mani">Mani</option>
                     <option value="Lui">Lui</option>
                 </select>
-                { !isload && <button>Update Blog</button>}
-                { isload && <button disabled> Updating Blog.... </button>}
+                { isLoading && <button>Update Blog</button>}
+                { !isLoading && <button disabled> Updating Blog.... </button>}
             </form>
+            )}
         </div>
-    )
+        </div>
+    );
 }
 
-export default BlogDetails;
+export default Create;

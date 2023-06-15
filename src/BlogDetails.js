@@ -1,15 +1,15 @@
-import { useParams, useNavigate } from 'react-router-dom';
+import { useParams, useNavigate, Link } from 'react-router-dom';
 import useFetch from './useFetch';
 
 const BlogDetails = () => {
     const { id } = useParams();
     const navigate = useNavigate()
-    const { data: getBlogs, error, isLoading } = useFetch(' http://localhost:8000/blogs/' + id)
+    const { data: getBlogs, error, isLoading } = useFetch(' https://db-rose.vercel.app/blogs/' + id)
 
 
     const deleteBlog = () => {
 
-        fetch(' http://localhost:8000/blogs/'+ id, {
+        fetch(' https://db-rose.vercel.app/blogs/'+ id, {
             method: 'DELETE'
 
         }).then (() => {
@@ -17,10 +17,11 @@ const BlogDetails = () => {
         })
     }
 
-    const updateBlog = (id) =>{
+    const updateBlog = () =>{
         <Link to={`/blog/${ id }`}>
              </Link>
     }
+    
  
     return (
         <div>
@@ -34,7 +35,9 @@ const BlogDetails = () => {
                 
                 
         <button onClick={ deleteBlog }>Delete</button>
-        <button onClick={ updateBlog(getBlogs.id) }> Update</button>
+        <Link to={`/blog/${ id }`}>
+            <a> Update</a>
+             </Link>
             </article>
         )}
         </div>
